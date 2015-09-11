@@ -14,3 +14,7 @@ Reads environment variables "KDB_PATH" and "KDB_PASS" to open KeePass file and e
 ## Installation
 See the playbook "kdb_inventory_install.yml" as example for installation on Ubuntu.
 
+## Examples
+- password of example.kdbx is "example"
+- example.kdbx.json is the JSON output
+
