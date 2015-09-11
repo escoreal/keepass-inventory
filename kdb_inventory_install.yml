@@ -1,0 +1,49 @@
+---
+- hosts: ansible
+  vars:
+    src_url: https://raw.githubusercontent.com/escoreal/ansible_kdb_inventory/master/kdb_inventory.py
+    dest_path: /etc/ansible/inventory
+  tasks:
+    - name: create needed paths
+      file: path={{ item }} state=directory
+      with_items:
+        - "{{ dest_path }}/.kdbx"
+
+    - name: ansible config to read inventory path
+      lineinfile: >
+        dest="/etc/ansible/ansible.cfg" 
+        regexp="^inventory      =" 
+        line="inventory      = {{ dest_path }}/"
+
+    - name: install needed apt packages
+      apt: pkg={{ item }} state=present
+      with_items:
+        - python-dev
+        - libxml2-dev
+        - libxslt1-dev
+        - zlib1g-dev
+
+    - name: install requirements
+      pip: name={{ item }} 
+      with_items:
+        - lxml
+        - nose
+        - pycrypto
+        - libkeepass
+
+    - name: install kdb_inventory script
+      get_url: >
+        url={{ src_url }} 
+        dest={{ dest_path }}/kdb_inventory.py
+        mode=0755
+
+    - name: accept KDB env in sshd
+      lineinfile: >
+        dest="/etc/ssh/sshd_config"
+        regexp="^AcceptEnv"
+        line="AcceptEnv LANG LC_* KDB_*"
+      notify: restart sshd
+
+  handlers:
+    - name: restart sshd
+      service: name=ssh state=restarted

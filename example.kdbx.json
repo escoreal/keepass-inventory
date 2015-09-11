@@ -1,0 +1,143 @@
+{
+  "_meta": {
+    "hostvars": {
+      "host1.intern.example.com": {
+        "password": "fcBbrADMJoPDwjpu", 
+        "username": "root"
+      }, 
+      "host2.intern.example.com": {
+        "password": "fcBbrADMJoPDwjpu", 
+        "username": "root"
+      }, 
+      "vm1.intern.example.com": {
+        "password": "ymH3p5EnYwShpqcx", 
+        "stage": "prod", 
+        "username": "root"
+      }, 
+      "vm2.dmz.example.com": {
+        "ipv4_address": "10.2.0.2", 
+        "password": "NZi9KrVnVzMVJ6CCa"
+      }
+    }
+  }, 
+  "dmz": {
+    "hosts": [
+      "vm2.dmz.example.com"
+    ]
+  }, 
+  "dmz_BBABF59620365B4EAB1FE6A6478438C0": {
+    "children": [
+      "vm_899C3458FA9F3049B7374D7CFD862779"
+    ], 
+    "vars": {
+      "domain": "dmz.example.com", 
+      "ipv4_dns_nameservers": "10.2.0.10 10.2.0.11", 
+      "ipv4_gateway": "10.2.0.1"
+    }
+  }, 
+  "esx": {
+    "hosts": [
+      "host1.intern.example.com"
+    ]
+  }, 
+  "host": {
+    "hosts": [
+      "host1.intern.example.com", 
+      "host2.intern.example.com"
+    ]
+  }, 
+  "host_CA7046285A69EB4DA4C1CA9D66FADC8D": {
+    "hosts": [
+      "host1.intern.example.com", 
+      "host2.intern.example.com"
+    ]
+  }, 
+  "intern": {
+    "hosts": [
+      "vm1.intern.example.com", 
+      "host1.intern.example.com", 
+      "host2.intern.example.com"
+    ]
+  }, 
+  "intern_0AEE2DA88D022D48B48C8BA48AB692AD": {
+    "children": [
+      "vm_8A18B76A58455B459F464B885FBA5E65", 
+      "host_CA7046285A69EB4DA4C1CA9D66FADC8D"
+    ], 
+    "vars": {
+      "domain": "intern.example.com", 
+      "ipv4_dns_nameservers": "10.0.0.10 10.0.0.11", 
+      "ipv4_gateway": "10.0.0.1"
+    }
+  }, 
+  "linux": {
+    "hosts": [
+      "vm1.intern.example.com"
+    ]
+  }, 
+  "prod": {
+    "hosts": [
+      "vm1.intern.example.com"
+    ]
+  }, 
+  "pve": {
+    "hosts": [
+      "host2.intern.example.com"
+    ]
+  }, 
+  "role_webserver": {
+    "hosts": [
+      "vm1.intern.example.com", 
+      "vm2.dmz.example.com"
+    ]
+  }, 
+  "server": {
+    "hosts": [
+      "vm1.intern.example.com", 
+      "host1.intern.example.com", 
+      "host2.intern.example.com", 
+      "vm2.dmz.example.com"
+    ]
+  }, 
+  "server_DD782172E7656145A4A8DDB1B1CE9493": {
+    "children": [
+      "intern_0AEE2DA88D022D48B48C8BA48AB692AD", 
+      "dmz_BBABF59620365B4EAB1FE6A6478438C0"
+    ]
+  }, 
+  "test": {
+    "hosts": [
+      "vm1.intern.example.com", 
+      "host1.intern.example.com", 
+      "host2.intern.example.com", 
+      "vm2.dmz.example.com"
+    ]
+  }, 
+  "test_38BA7E93B3AE584FABFED025129BBEF1": {
+    "children": [
+      "server_DD782172E7656145A4A8DDB1B1CE9493"
+    ], 
+    "vars": {
+      "ansible_ssh_host": "localhost", 
+      "company": "example GmbH", 
+      "domain": "example.com", 
+      "ipv4_dns_nameservers": "8.8.8.8 8.8.4.4"
+    }
+  }, 
+  "vm": {
+    "hosts": [
+      "vm1.intern.example.com", 
+      "vm2.dmz.example.com"
+    ]
+  }, 
+  "vm_899C3458FA9F3049B7374D7CFD862779": {
+    "hosts": [
+      "vm2.dmz.example.com"
+    ]
+  }, 
+  "vm_8A18B76A58455B459F464B885FBA5E65": {
+    "hosts": [
+      "vm1.intern.example.com"
+    ]
+  }
+}
