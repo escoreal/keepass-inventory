@@ -19,6 +19,7 @@
       apt: pkg={{ item }} state=present
       with_items:
         - python-dev
+        - python-pip
         - libxml2-dev
         - libxslt1-dev
         - zlib1g-dev
