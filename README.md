@@ -10,6 +10,7 @@ Reads environment variables "KDB_PATH" and "KDB_PASS" to open KeePass file and e
 - "Titles" with spaces and empty values are ignored.
 - tags are mapped to groups. '=' is replaced by '_'.
 - group names and names of vars are converted to lower case.
+- Values starting with '---' are parsed as YAML.
  
 ## Installation
 See the playbook "kdb_inventory_install.yml" as example for installation on Ubuntu.
