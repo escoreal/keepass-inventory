@@ -8,6 +8,8 @@ import json
 import lxml.etree as ET
 from string import maketrans
 import base64
+import re
+import yaml
 
 def kdb_inventory():
   filename = os.environ["KDB_PATH"]
@@ -46,6 +48,8 @@ def kdb_inventory():
             hostname = value.lower()
           if value and key != "title":
             hostvars[key] = value
+          if re.match('^---', value):
+            hostvars[key] = yaml.load(value)
         if hostname and hostname != "group_vars" and ' ' not in hostname:
           hostgroups.append(group_name_uuid)
           groups = {
