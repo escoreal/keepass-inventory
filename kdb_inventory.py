@@ -14,7 +14,7 @@ import yaml
 def kdb_inventory():
   filename = os.environ["KDB_PATH"]
   credentials = { 'password' : os.environ["KDB_PASS"] }
-  vgroups = ['product', 'stage', 'tier', 'type']
+  vgroups = ['product', 'stage', 'tier', 'type', 'ansible_ssh_host']
   hosts = {}
   inventory = {}
   inventory_vars = {}
@@ -48,8 +48,12 @@ def kdb_inventory():
             hostname = value.lower()
           if value and key != "title":
             hostvars[key] = value
-          if re.match('^---', value):
-            hostvars[key] = yaml.load(value)
+          if re.match('^---\n', value):
+            hostvars[key] = yaml.safe_load(value)
+          if value in [ 'True', 'true' ]:
+            hostvars[key] = True
+          if value in [ 'False', 'false' ]:
+            hostvars[key] = False
         if hostname and hostname != "group_vars" and ' ' not in hostname:
           hostgroups.append(group_name_uuid)
           groups = {
