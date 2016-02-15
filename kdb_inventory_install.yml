@@ -30,7 +30,7 @@
         - lxml
         - nose
         - pycrypto
-        - libkeepass
+        - git+https://github.com/Ferada/libkeepass.git
 
     - name: install kdb_inventory script
       get_url: >
