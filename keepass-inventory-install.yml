@@ -1,7 +1,7 @@
 ---
 - hosts: ansible
   vars:
-    src_url: https://raw.githubusercontent.com/escoreal/ansible_kdb_inventory/master/kdb_inventory.py
+    src_url: https://raw.githubusercontent.com/escoreal/keepass-inventory/master/keepass-inventory.py
     dest_path: /etc/ansible/inventory
   tasks:
     - name: create needed paths
