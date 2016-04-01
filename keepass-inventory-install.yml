@@ -35,7 +35,7 @@
     - name: install kdb_inventory script
       get_url: >
         url={{ src_url }} 
-        dest={{ dest_path }}/kdb_inventory.py
+        dest={{ dest_path }}/keepass-inventory.py
         mode=0755
 
     - name: accept KDB env in sshd
