@@ -4,9 +4,7 @@ Quick & dirty (just a sysadmin ;) ) Ansible inventory script to read KeePass 2.x
 Reads environment variables "KDB_PATH" and "KDB_PASS" to open KeePass file and export JSON inventory for Ansible.
 
 ## Installation
-- Requires Python 2, doesn't work with Python 3. Tested on Python 2.7.
-- Requires an old version of libkeepass module that is compatible with Python 2.
-- The Ubuntu installation via Ansible is documented as a playbook "keepass-inventory-install.yml".
+- Requires Python 3. Tested on Python 3.6.
 
 ## Details
 - Entries are mapped to hosts. "Title" -> hostname.
@@ -16,7 +14,7 @@ Reads environment variables "KDB_PATH" and "KDB_PASS" to open KeePass file and e
 - Tags are mapped to groups. '=' is replaced by '_'.
 - Group names and names of vars are converted to lower case.
 - Values starting with '---' are parsed as YAML.
- 
+
 ## Examples
 - Password of example.kdbx is "example"
 - example.kdbx.json is the resulting JSON that is fed to Ansible
