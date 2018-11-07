@@ -21,6 +21,8 @@ def kdb_inventory():
       history.getparent().remove(history)
     for group in xmldata.findall(".//Group"):
       group_name = group.find("./Name").text.lower()
+      if re.match('^recycle.bin.*',group_name):
+        continue
       group_uuid = group.find("./UUID").text
       group_uuid = base64.b16encode(base64.b64decode(group_uuid)).decode('utf-8')
       group_name_uuid = group_name + "_" + group_uuid
