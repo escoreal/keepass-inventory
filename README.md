@@ -2,7 +2,7 @@
 Ansible inventory script to read KeePass 2.x (v4) files.
 
 ## Install
-- Requires Python 3. Tested on Python 3.6.
+- Requires Python 3. Tested on Python 3.6.6.
 
 ## Verify (read only)
 Password to example.kdbx is "example":
@@ -12,7 +12,7 @@ Password to example.kdbx is "example":
 
     ./keepass-inventory.py --list
 
-The standard output should be a readable JSON. The usual Ansible -i argument can read it:
+The standard output is a human-readable JSON. The usual Ansible `-i` option reads it:
 
     ansible all --list-hosts -i keepass-inventory.py
 
@@ -22,11 +22,11 @@ Security: continue on a system where you trust all root users. They can see your
     export KDB_PASS=   KDB_PATH=your.kdbx
     read -sp Pass: KDB_PASS
     
-    ansible  all   -i keepass-inventory.py    -m shell -a 'wc /etc/shadow'
+    ansible  all   -i keepass-inventory.py    -m shell -a /bin/true
 
-Instead of "root" passwords inside Keepass you can use "jsmith" accounts with sudo (or similar mechanism):
+If you don't want direct ssh to root you can use a Keepass with normal "jsmith" logins. Adding `-b` escalates your privileges trough sudo. See if you can open a protected system file:
 
-   ansible all -b -i keepass-inventory.py    -m shell -a 'wc /etc/shadow'
+    ansible all -b -i keepass-inventory.py    -m shell -a 'wc /etc/shadow'
 
 Inside Keepass you can Add Group "devservers1" with some hosts and execute only on these:
 
@@ -39,21 +39,20 @@ The whole playbook:
     ansible-playbook /etc/ansible/site.yml -b -i keepass-inventory.py --limit=devservers1
 
 ## Advanced use
-- Understands an optional Keepass URL field if it starts with "ssh://", for example "ssh://server1.example.com"
-- Ignores completely entries that have other URL types, for example it will ignore "https://app.internal.example.com"
-- Ignores entries where the password starts with "{REF:"; these are Keepass internal references (like symbolic links)
-- Parses any values starting with '---' as YAML
-- Auxiliary Ansible groups appear that include the Keepass UUID in their names. You can ignore these
+- Understands an optional Keepass URL field if it starts with `ssh://`, for example `ssh://server1.example.com`
+- Ignores completely entries that have other URL types, for example it will ignore `https://app.internal.example.com`
+- Ignores entries where the password starts with `{REF:` as these are Keepass internal references (symbolic links to passwords)
+- Parses any values starting with `---` as YAML
+- In Ansible, auxiliary groups appear that include the Keepass UUID in their names; you can ignore these
 ### More grouping - Keepass Tags
-- In Keepass GUI go to Edit Entry -> Properties -> Tags -> enter "prod, dbserver, physical" for example
-- Keepass tags  map to Ansible groups, very similarly to Keepass groups:
+- In Keepass GUI go to `Edit Entry` -> `Properties` -> `Tags` -> enter for example `prod, dbserver, physical` 
+- Keepass tags will map to Ansible groups, so use them very similarly to Keepass groups:
  
       ansible-playbook /etc/ansible/site.yml -b -i keepass-inventory.py --limit=dbserver
 
-  - Within tags, `=` is replaced by `_`
+  - Within tags, `=` becomes `_`
 
-### Group vars
-- You can create a Keepass entry with the special title "group_vars"
-  - In KeePass GUI go to Edit Entry -> Advanced -> String Fields -> Add
-  - These fields will be Ansible vars for this entire group of hosts
-
+### Host vars
+- In KeePass GUI go to `Edit Entry` -> `Advanced` -> `String Fields` -> `Add`
+- These fields will be Ansible vars for this host
+- If you need per-group vars, put them in the special Keepass hostname `group_vars` and every host in the group will inherit them
