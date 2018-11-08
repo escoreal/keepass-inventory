@@ -4,7 +4,13 @@ Ansible inventory script to read KeePass 2.x (v4) files.
 ## Install
 - Requires Python 3. Tested on Python 3.6.6.
 
-## Verify (read only)
+      apt install python3 python3-pip
+
+- Requires libkeepass
+
+      pip3 install libkeepass
+
+### Verify installation (read only)
 Password to example.kdbx is "example":
 
     export KDB_PATH=example.kdbx
@@ -17,7 +23,7 @@ The standard output is a human-readable JSON. The usual Ansible `-i` option read
     ansible all --list-hosts -i keepass-inventory.py
 
 ## Standard use
-Security: continue on a system where you trust all root users. They can see your KDB_PASS.
+Security: continue on a system where you trust all admins. Root user can see your KDB_PASS.
 
     export KDB_PASS=   KDB_PATH=your.kdbx
     read -sp Pass: KDB_PASS
